@@ -18,7 +18,7 @@ class VehicleController {
     } catch (error) {
       res.status(500).json({
         code: res.statusCode,
-        message: "Error al obtener los vehiculos",
+        message: "Error al obtener todos los vehiculos",
       });
     }
   }
