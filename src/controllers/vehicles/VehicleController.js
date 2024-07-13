@@ -11,8 +11,18 @@ class VehicleController {
    */
   static async getVehicles(req, res) {
     try {
-      const sql = "CALL SEL_VEHICULOS";
-      const results = await query(sql);
+      let sql;
+      let results;
+      const limit = req.query.limit;
+
+      // if no limit is provided, return all vehicles
+      if (!limit) {
+        sql = "CALL SEL_VEHICULOS";
+        results = await query(sql);
+        return res.json(results);
+      }
+      sql = "CALL SEL_RANGO_VEHICULOS(?)";
+      results = await query(sql, [limit]);
 
       res.json(results);
     } catch (error) {
@@ -24,13 +34,25 @@ class VehicleController {
   }
 
   /**
-   * Get one vehicle
+   * Get one vehicle by id
    * @static
    * @memberof VehicleController
    * @param {import("express").Request} req
    * @param {import("express").Response} res
    */
-  static async getVehicle(req, res) {}
+  static async getVehicle(req, res) {
+    try {
+      const id = Number(req.params.id);
+      const sql = "CALL SEL_VEHICULO(?)";
+      const results = await query(sql, [id]);
+      res.json(results);
+    } catch (error) {
+      res.status(500).json({
+        code: res.statusCode,
+        message: "Error al obtener el vehiculo, el registro no existe",
+      });
+    }
+  }
 
   /**
    * Create a new vehicle
