@@ -2,7 +2,13 @@ import { createVehicleShema } from "./dto/create_vehicle.js";
 import { query } from "../../utils/query.js";
 import { updateVehicleShema } from "./dto/update_vehicle.js";
 import { JoiError } from "../../utils/JoiError.js";
-class VehicleController {
+import ControllerBaseModel from "../ControllerAbstract.js";
+
+/**
+ * @class VehicleController
+ * @extends ControllerBaseModel
+ */
+class VehicleController extends ControllerBaseModel {
   /**
    * Get all vehicles
    * @static
@@ -11,7 +17,7 @@ class VehicleController {
    * @param {import("express").Response} res
    * @returns {Promise<Array>}
    */
-  static async getVehicles(req, res) {
+  static async getRegisters(req, res) {
     try {
       let sql;
       let results;
@@ -43,7 +49,7 @@ class VehicleController {
    * @param {import("express").Response} res
    * @returns {Promise<Array>}
    */
-  static async getVehicle(req, res) {
+  static async getRegister(req, res) {
     try {
       const id = Number(req.params.id);
       const sql = "CALL SEL_VEHICULO(?)";
@@ -65,7 +71,7 @@ class VehicleController {
    * @param {import("express").Response} res
    * @returns {Promise<Array>}
    */
-  static async createVehicle(req, res) {
+  static async createRegister(req, res) {
     const body = req.body;
     try {
       const { error, value } = createVehicleShema.validate(body);
@@ -143,7 +149,7 @@ class VehicleController {
    * @param {import("express").Response} res
    * @returns {Promise<Array>}
    */
-  static async updateVehicle(req, res) {
+  static async updateRegister(req, res) {
     const body = req.body;
     try {
       const { error, value } = updateVehicleShema.validate(body);
