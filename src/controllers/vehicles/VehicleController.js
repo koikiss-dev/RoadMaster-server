@@ -19,20 +19,18 @@ class VehicleController extends ControllerBaseModel {
    */
   static async getRegisters(req, res) {
     try {
-      let sql;
-      let results;
-      const limit = req.query.limit;
+      const limit = req.query.limit || undefined;
+      const sql = limit ? "CALL SEL_RANGO_VEHICULOS(?)" : "CALL SEL_VEHICULOS";
+      const results = await query(sql, limit);
+      const resultsImageVehicle = await query(
+        "CALL SEL_VEHICULO_IMAGEN(?)",
+        results.map(({ COD_VEHICULO }) => COD_VEHICULO)
+      );
 
-      // if no limit is provided, return all vehicles
-      if (!limit) {
-        sql = "CALL SEL_VEHICULOS";
-        results = await query(sql);
-        return res.json(results);
-      }
-      sql = "CALL SEL_RANGO_VEHICULOS(?)";
-      results = await query(sql, [limit]);
-
-      res.json(results);
+      res.status(200).json({
+        results,
+        resultsImageVehicle,
+      });
     } catch (error) {
       res.status(500).json({
         code: res.statusCode,
@@ -52,13 +50,19 @@ class VehicleController extends ControllerBaseModel {
   static async getRegister(req, res) {
     try {
       const id = Number(req.params.id);
-      const sql = "CALL SEL_VEHICULO(?)";
-      const results = await query(sql, [id]);
-      res.json(results);
+      const results = await query("CALL SEL_VEHICULO(?)", [id]);
+
+      const resultsImageVehicle = await query("CALL SEL_VEHICULO_IMAGEN(?)", [
+        results[0].COD_VEHICULO,
+      ]);
+      return res.json({
+        results,
+        resultsImageVehicle,
+      });
     } catch (error) {
-      res.status(500).json({
+      return res.status(500).json({
         code: res.statusCode,
-        message: "Error al obtener el vehiculo, el registro no existe",
+        message: "Error al obtener el vehiculo",
       });
     }
   }
@@ -105,9 +109,10 @@ class VehicleController extends ControllerBaseModel {
         PB_VAL_VENDIDO,
       } = value;
 
-      const sql =
+      const sqlVehicle =
         "CALL INS_VEHICULO(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-      const results = await query(sql, [
+
+      const resultsVehicle = await query(sqlVehicle, [
         PV_NOM_VEHICULO,
         PV_DES_VEHICULO,
         PI_COD_SUCURSAL,
@@ -131,8 +136,11 @@ class VehicleController extends ControllerBaseModel {
         PB_VAL_FRENOS,
         PB_VAL_VENDIDO,
       ]);
-
-      res.json(results);
+      res.status(201).json({
+        code: res.statusCode,
+        message: "Vehiculo creado exitosamente",
+        resultsVehicle,
+      });
     } catch (error) {
       res.status(500).json({
         code: res.statusCode,
@@ -211,7 +219,7 @@ class VehicleController extends ControllerBaseModel {
         PB_VAL_FRENOS,
         PB_VAL_VENDIDO,
       ]);
-      res.json(results);
+      res.status(200).json(results);
     } catch (error) {
       res.status(500).json({
         code: res.statusCode,
