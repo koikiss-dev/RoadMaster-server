@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@supabase/supabase-js": "^2.44.3",
     "class-validator": "^0.14.1",
     "express": "^4.19.2",
     "joi": "^17.13.3",

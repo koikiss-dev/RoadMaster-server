@@ -14,7 +14,29 @@ class ImageController extends ControllerBaseModel {
    * @param {import("express").Response} res
    * @returns {Promise<Array>}
    */
-  static async getRegisters(req, res) {}
+  static async getRegisters(req, res) {
+    try {
+      let sql;
+      let results;
+      const limit = req.query.limit;
+
+      // if no limit is provided, return all vehicles
+      if (!limit) {
+        sql = "CALL SEL_IMAGENES";
+        results = await query(sql);
+        return res.json(results);
+      }
+      sql = "CALL SEL_RANGO_IMAGENES(?)";
+      results = await query(sql, [limit]);
+
+      res.json(results);
+    } catch (error) {
+      res.status(500).json({
+        code: res.statusCode,
+        message: "Error al obtener los vehiculos",
+      });
+    }
+  }
   static async getRegister(req, res) {}
   static async createRegister(req, res) {}
   static async updateRegister(req, res) {}
