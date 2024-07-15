@@ -49,11 +49,12 @@ class VehicleController extends ControllerBaseModel {
    */
   static async getRegister(req, res) {
     try {
-      const id = Number(req.params.id);
+      const id = req.query.id;
+      console.log(2);
       const results = await query("CALL SEL_VEHICULO(?)", [id]);
 
       const resultsImageVehicle = await query("CALL SEL_VEHICULO_IMAGEN(?)", [
-        results[0].COD_VEHICULO,
+        id,
       ]);
       return res.json({
         results,
