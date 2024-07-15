@@ -6,7 +6,6 @@ import helmet from "helmet";
 
 //import routes
 import { VehiclesRoutes } from "./controllers/vehicles/routes/VehiclesRoutes.js";
-import { ImageRoutes } from "./controllers/images/routes/ImagesRoutes.js";
 
 //express config
 const app = express();
@@ -20,7 +19,7 @@ app.use(helmet());
 app.use(cors());
 
 //use routes
-app.use(ImageRoutes);
+
 app.use(VehiclesRoutes);
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
