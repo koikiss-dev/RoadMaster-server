@@ -5,6 +5,7 @@ import { JoiError } from "../../utils/JoiError.js";
 import ControllerBaseModel from "../ControllerAbstract.js";
 
 /**
+ * Clase para vehiculos
  * @class VehicleController
  * @extends ControllerBaseModel
  */
