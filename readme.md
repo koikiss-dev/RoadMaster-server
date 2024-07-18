@@ -8,7 +8,7 @@ Repositorio de GitHub donde esta almacenado el código fuente de la api para el 
 - Tener instalado NodeJS ([NodeJs](https://nodejs.org/en/download/prebuilt-installer))
 - Tener un editor de código, de preferencia vscode ([VSCode](https://code.visualstudio.com/download))
 
-## Documentación de algunos paquetes UTILES
+## Documentación de algunos paquetes UTI
 
 [joi.dev](https://joi.dev/api/?v=17.13.3)
 
