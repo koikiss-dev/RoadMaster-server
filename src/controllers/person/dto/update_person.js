@@ -12,8 +12,8 @@ export const updatePersonShema = Joi.object().keys({
     PD_FEC_NACIMIENTO:      Joi.date().default(null),
     PD_FEC_INGRESO:         Joi.date().default(null),  
     PD_FEC_ACTUALIZACION:   Joi.date().default(null),
-    PB_VAL_ESTADO_CIVIL:    Joi.string().length(4).uppercase().default(null),
-    PB_SEX_PERSONA:         Joi.string().length(2).uppercase().default(null),
+    PB_VAL_ESTADO_CIVIL:    Joi.string().default('NULL','NULL','NULL','NULL'),
+    PB_SEX_PERSONA:         Joi.string().default('NULL','NULL'),
  
 
 });

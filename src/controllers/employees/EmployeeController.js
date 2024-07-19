@@ -83,17 +83,17 @@ static async createRegister(req, res) {
 
       // extract values from the validated object
       const {
-        PI_COD_EMPLEADO,
+       
         PB_VAL_ROL,
         PI_COD_PERSONA,
 
       } = value;
 
       const sqlEmployee =
-        "CALL INS_EMPLEADO(?, ?, ?)";
+        "CALL INS_EMPLEADO(?, ?)";
 
       const resultsEmployee = await query(sqlEmployee, [
-        PI_COD_EMPLEADO,
+ 
         PB_VAL_ROL,
         PI_COD_PERSONA,
       ]);

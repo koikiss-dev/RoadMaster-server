@@ -2,7 +2,7 @@
 import Joi from "joi";
 
 export const createPersonShema = Joi.object().keys({
-    PI_COD_PERSONA:         Joi.number().required(),
+   
     PV_DNI:                 Joi.string().required(),
     PV_NOM_PRIMER_NOMBRE:   Joi.string().required(),
     PV_NOM_PRIMER_APELLIDO: Joi.string().required(),
@@ -12,8 +12,8 @@ export const createPersonShema = Joi.object().keys({
     PD_FEC_NACIMIENTO:      Joi.date().required(),
     PD_FEC_INGRESO:         Joi.date().required(),  
     PD_FEC_ACTUALIZACION:   Joi.date().required(),
-    PB_VAL_ESTADO_CIVIL:    Joi.string().length(4).uppercase().required(),
-    PB_SEX_PERSONA:         Joi.string().length(2).uppercase().required(),
+    PB_VAL_ESTADO_CIVIL:    Joi.string().valid('SOLTERO', 'CASADO', 'VIUDO', 'DIVORCIADO').required(),
+    PB_SEX_PERSONA:         Joi.string().valid('H', 'M').required(),
    
 
 });

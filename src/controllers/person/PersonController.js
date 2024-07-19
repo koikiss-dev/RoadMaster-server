@@ -77,7 +77,7 @@ class PersonController extends ControllerBaseModel {
 
       // extract values from the validated object
       const {
-        PI_COD_PERSONA,
+      
         PV_DNI,
         PV_NOM_PRIMER_NOMBRE,
         PV_NOM_PRIMER_APELLIDO,
@@ -92,10 +92,10 @@ class PersonController extends ControllerBaseModel {
       } = value;
 
       const sqlPerson =
-        "CALL INS_Persona(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "CALL INS_Persona(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
       const resultsPerson = await query(sqlPerson, [
-        PI_COD_PERSONA,
+    
         PV_DNI,
         PV_NOM_PRIMER_NOMBRE,
         PV_NOM_PRIMER_APELLIDO,

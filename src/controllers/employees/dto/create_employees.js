@@ -2,8 +2,8 @@
 import Joi from "joi";
 
 export const createEmployeeShema = Joi.object().keys({
-    PI_COD_EMPLEADO: Joi.number().required(),
-    PB_VAL_ROL: Joi.string().length(2).uppercase().reuired(),
+
+    PB_VAL_ROL: Joi.string().valid('GERENTE', 'DEPENDIENTE').required(),
     PI_COD_PERSONA: Joi.number().required(),
 
 });
