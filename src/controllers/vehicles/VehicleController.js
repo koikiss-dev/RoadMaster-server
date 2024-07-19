@@ -23,16 +23,13 @@ class VehicleController extends ControllerBaseModel {
       const limit = req.query.limit || undefined;
       const sql = limit ? "CALL SEL_RANGO_VEHICULOS(?)" : "CALL SEL_VEHICULOS";
       const results = await query(sql, limit);
-      const resultsImageVehicle = await query(
-        "CALL SEL_VEHICULO_IMAGEN(?)",
-        results.map(({ COD_VEHICULO }) => COD_VEHICULO)
-      );
+      //const iterIds = results.map(({ COD_VEHICULO }) => COD_VEHICULO);
 
       res.status(200).json({
         results,
-        resultsImageVehicle,
       });
     } catch (error) {
+      console.log(error);
       res.status(500).json({
         code: res.statusCode,
         message: "Error al obtener los vehiculos",
@@ -53,12 +50,8 @@ class VehicleController extends ControllerBaseModel {
       const id = req.query.id;
       const results = await query("CALL SEL_VEHICULO(?)", [id]);
 
-      const resultsImageVehicle = await query("CALL SEL_VEHICULO_IMAGEN(?)", [
-        id,
-      ]);
       return res.json({
         results,
-        resultsImageVehicle,
       });
     } catch (error) {
       return res.status(500).json({
@@ -138,8 +131,6 @@ class VehicleController extends ControllerBaseModel {
         PB_VAL_VENDIDO,
       ]);
       res.status(201).json({
-        code: res.statusCode,
-        message: "Vehiculo creado exitosamente",
         resultsVehicle,
       });
     } catch (error) {
@@ -229,5 +220,36 @@ class VehicleController extends ControllerBaseModel {
     }
   }
 }
+
+/*
+async function getVehicleImages(resultsQuery, id) {
+  let results;
+
+  // iter all results
+  for (const data of resultsQuery) {
+    const resultsImageVehicle = await query("CALL SEL_VEHICULO_IMAGEN(?)", [
+      id,
+    ]);
+
+    const images = []; // array for images
+    if (resultsImageVehicle.length === 0) {
+      continue;
+    }
+    for (let i = 0; i < resultsImageVehicle.length; i++) {
+      const element = resultsImageVehicle[i];
+      const contentImages = await query("CALL SEL_IMAGEN(?)", [
+        element.COD_IMAGEN,
+      ]);
+
+      for (let j = 0; j < contentImages.length; j++) {
+        const element = contentImages[j];
+        images.push(element);
+      }
+    }
+
+    results = images;
+  }
+  return results;
+} */
 
 export default VehicleController;

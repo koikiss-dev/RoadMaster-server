@@ -21,6 +21,14 @@ export const createVehicleShema = Joi.object().keys({
   PI_NUM_CAPACIDAD_CARGA_KG: Joi.number().required(),
   PI_NUM_ASIENTOS: Joi.number().required(),
   PI_NUM_AIRBAGS: Joi.number().required(),
-  PB_VAL_FRENOS: Joi.string().length(2).uppercase().required(),
-  PB_VAL_VENDIDO: Joi.string().length(2).uppercase().required(),
+  PB_VAL_FRENOS: Joi.string()
+    .valid("SI", "NO")
+    .length(2)
+    .uppercase()
+    .required(),
+  PB_VAL_VENDIDO: Joi.string()
+    .valid("SI", "NO")
+    .length(2)
+    .uppercase()
+    .required(),
 });
