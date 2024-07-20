@@ -3,6 +3,11 @@ import Joi from "joi";
 export const createVehicleShema = Joi.object().keys({
   PV_NOM_VEHICULO: Joi.string().required(),
   PV_DES_VEHICULO: Joi.string().required(),
+  PV_URL_IMAGE: Joi.string().default(null),
+  PE_TIPO_IMAGEN: Joi.string()
+    .valid("BANNER", "CONTENIDO")
+    .uppercase()
+    .default("BANNER"),
   PI_COD_SUCURSAL: Joi.number().required(),
   PI_COD_MARCA: Joi.number().required(),
   PI_COD_MODELO: Joi.number().required(),

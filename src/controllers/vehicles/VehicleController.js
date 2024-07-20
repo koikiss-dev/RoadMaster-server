@@ -81,6 +81,8 @@ class VehicleController extends ControllerBaseModel {
       const {
         PV_NOM_VEHICULO,
         PV_DES_VEHICULO,
+        PV_URL_IMAGE,
+        PE_TIPO_IMAGEN,
         PI_COD_SUCURSAL,
         PI_COD_MARCA,
         PI_COD_MODELO,
@@ -105,8 +107,10 @@ class VehicleController extends ControllerBaseModel {
 
       const sqlVehicle =
         "CALL INS_VEHICULO(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      const sqlCreateImageForVehicle = "CALL INS_IMAGEN(?, ?)";
+      const sqlInsVehiclesImages = "CALL INS_VEHICULOS_IMAGENES(?, ?)";
 
-      const resultsVehicle = await query(sqlVehicle, [
+      const vehicle = await query(sqlVehicle, [
         PV_NOM_VEHICULO,
         PV_DES_VEHICULO,
         PI_COD_SUCURSAL,
@@ -130,8 +134,18 @@ class VehicleController extends ControllerBaseModel {
         PB_VAL_FRENOS,
         PB_VAL_VENDIDO,
       ]);
+      const image = await query(sqlCreateImageForVehicle, [
+        PV_URL_IMAGE,
+        PE_TIPO_IMAGEN,
+      ]);
+      await query(sqlInsVehiclesImages, [
+        vehicle[0].COD_VEHICULO,
+        image[0].COD_IMAGEN,
+      ]);
+      vehicle[0].imagen = image[0];
+
       res.status(201).json({
-        resultsVehicle,
+        vehicle,
       });
     } catch (error) {
       res.status(500).json({
@@ -162,6 +176,9 @@ class VehicleController extends ControllerBaseModel {
         PI_COD_VEHICULO,
         PV_NOM_VEHICULO,
         PV_DES_VEHICULO,
+        PI_COD_IMAGEN,
+        PV_URL_IMAGE,
+        PE_TIPO_IMAGEN,
         PI_COD_SUCURSAL,
         PI_COD_MARCA,
         PI_COD_MODELO,
@@ -186,7 +203,9 @@ class VehicleController extends ControllerBaseModel {
       //23
       const sql =
         "CALL UPD_VEHICULO(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-      const results = await query(sql, [
+      const sqlUpdateImagen = "CALL UPD_IMAGEN(?, ?, ?)";
+      const sqlupdVehicleImage = "CALL UPD_VEHICULOS_IMAGENES(?, ?)";
+      const vehicle = await query(sql, [
         PI_COD_VEHICULO,
         PV_NOM_VEHICULO,
         PV_DES_VEHICULO,
@@ -211,7 +230,14 @@ class VehicleController extends ControllerBaseModel {
         PB_VAL_FRENOS,
         PB_VAL_VENDIDO,
       ]);
-      res.status(200).json(results);
+      const updImagen = await query(sqlUpdateImagen, [
+        PI_COD_IMAGEN,
+        PV_URL_IMAGE,
+        PE_TIPO_IMAGEN,
+      ]);
+      await query(sqlupdVehicleImage, [PI_COD_VEHICULO, PI_COD_IMAGEN]);
+      vehicle[0].imagen = updImagen[0];
+      res.status(200).json(vehicle);
     } catch (error) {
       res.status(500).json({
         code: res.statusCode,
@@ -220,36 +246,5 @@ class VehicleController extends ControllerBaseModel {
     }
   }
 }
-
-/*
-async function getVehicleImages(resultsQuery, id) {
-  let results;
-
-  // iter all results
-  for (const data of resultsQuery) {
-    const resultsImageVehicle = await query("CALL SEL_VEHICULO_IMAGEN(?)", [
-      id,
-    ]);
-
-    const images = []; // array for images
-    if (resultsImageVehicle.length === 0) {
-      continue;
-    }
-    for (let i = 0; i < resultsImageVehicle.length; i++) {
-      const element = resultsImageVehicle[i];
-      const contentImages = await query("CALL SEL_IMAGEN(?)", [
-        element.COD_IMAGEN,
-      ]);
-
-      for (let j = 0; j < contentImages.length; j++) {
-        const element = contentImages[j];
-        images.push(element);
-      }
-    }
-
-    results = images;
-  }
-  return results;
-} */
 
 export default VehicleController;
