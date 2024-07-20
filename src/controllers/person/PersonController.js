@@ -1,4 +1,3 @@
-
 import { createPersonShema } from "./dto/create_person.js";
 import { query } from "../../utils/query.js";
 import { updatePersonShema } from "./dto/update_person.js";
@@ -77,7 +76,6 @@ class PersonController extends ControllerBaseModel {
 
       // extract values from the validated object
       const {
-      
         PV_DNI,
         PV_NOM_PRIMER_NOMBRE,
         PV_NOM_PRIMER_APELLIDO,
@@ -85,33 +83,25 @@ class PersonController extends ControllerBaseModel {
         PI_COD_EMAIL,
         PI_COD_DIRECCION,
         PD_FEC_NACIMIENTO,
-        PD_FEC_INGRESO,  
-        PD_FEC_ACTUALIZACION,
         PB_VAL_ESTADO_CIVIL,
         PB_SEX_PERSONA,
       } = value;
 
-      const sqlPerson =
-        "CALL INS_Persona(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      const sqlPerson = "CALL INS_Persona(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-      const resultsPerson = await query(sqlPerson, [
-    
+      const results = await query(sqlPerson, [
         PV_DNI,
         PV_NOM_PRIMER_NOMBRE,
         PV_NOM_PRIMER_APELLIDO,
+        PB_VAL_ESTADO_CIVIL,
+        PB_SEX_PERSONA,
+        PD_FEC_NACIMIENTO,
         PI_COD_TELEFONO,
         PI_COD_EMAIL,
         PI_COD_DIRECCION,
-        PD_FEC_NACIMIENTO,
-        PD_FEC_INGRESO,  
-        PD_FEC_ACTUALIZACION,
-        PB_VAL_ESTADO_CIVIL,
-        PB_SEX_PERSONA,
       ]);
       res.status(201).json({
-        code: res.statusCode,
-        message: "Persona ingresada exitosamente",
-        resultsPerson,
+        results,
       });
     } catch (error) {
       res.status(500).json({
@@ -147,27 +137,22 @@ class PersonController extends ControllerBaseModel {
         PI_COD_EMAIL,
         PI_COD_DIRECCION,
         PD_FEC_NACIMIENTO,
-        PD_FEC_INGRESO,  
-        PD_FEC_ACTUALIZACION,
         PB_VAL_ESTADO_CIVIL,
         PB_SEX_PERSONA,
       } = value;
-      
-      const sql =
-        "CALL UPD_PERSONA(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+      const sql = "CALL UPD_PERSONA(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       const results = await query(sql, [
         PI_COD_PERSONA,
         PV_DNI,
         PV_NOM_PRIMER_NOMBRE,
         PV_NOM_PRIMER_APELLIDO,
+        PB_VAL_ESTADO_CIVIL,
+        PB_SEX_PERSONA,
+        PD_FEC_NACIMIENTO,
         PI_COD_TELEFONO,
         PI_COD_EMAIL,
         PI_COD_DIRECCION,
-        PD_FEC_NACIMIENTO,
-        PD_FEC_INGRESO,  
-        PD_FEC_ACTUALIZACION,
-        PB_VAL_ESTADO_CIVIL,
-        PB_SEX_PERSONA,
       ]);
       res.status(200).json(results);
     } catch (error) {
@@ -180,10 +165,3 @@ class PersonController extends ControllerBaseModel {
 }
 
 export default PersonController;
-
-
-
-
-
-
-
