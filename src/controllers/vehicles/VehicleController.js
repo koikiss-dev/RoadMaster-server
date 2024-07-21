@@ -5,6 +5,7 @@ import { JoiError } from "../../utils/JoiError.js";
 import ControllerBaseModel from "../ControllerAbstract.js";
 
 /**
+ * Clase para vehiculos
  * @class VehicleController
  * @extends ControllerBaseModel
  */
@@ -22,16 +23,13 @@ class VehicleController extends ControllerBaseModel {
       const limit = req.query.limit || undefined;
       const sql = limit ? "CALL SEL_RANGO_VEHICULOS(?)" : "CALL SEL_VEHICULOS";
       const results = await query(sql, limit);
-      const resultsImageVehicle = await query(
-        "CALL SEL_VEHICULO_IMAGEN(?)",
-        results.map(({ COD_VEHICULO }) => COD_VEHICULO)
-      );
+      //const iterIds = results.map(({ COD_VEHICULO }) => COD_VEHICULO);
 
       res.status(200).json({
         results,
-        resultsImageVehicle,
       });
     } catch (error) {
+      console.log(error);
       res.status(500).json({
         code: res.statusCode,
         message: "Error al obtener los vehiculos",
@@ -52,12 +50,8 @@ class VehicleController extends ControllerBaseModel {
       const id = req.query.id;
       const results = await query("CALL SEL_VEHICULO(?)", [id]);
 
-      const resultsImageVehicle = await query("CALL SEL_VEHICULO_IMAGEN(?)", [
-        id,
-      ]);
       return res.json({
         results,
-        resultsImageVehicle,
       });
     } catch (error) {
       return res.status(500).json({
@@ -87,6 +81,8 @@ class VehicleController extends ControllerBaseModel {
       const {
         PV_NOM_VEHICULO,
         PV_DES_VEHICULO,
+        PV_URL_IMAGE,
+        PE_TIPO_IMAGEN,
         PI_COD_SUCURSAL,
         PI_COD_MARCA,
         PI_COD_MODELO,
@@ -111,8 +107,10 @@ class VehicleController extends ControllerBaseModel {
 
       const sqlVehicle =
         "CALL INS_VEHICULO(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      const sqlCreateImageForVehicle = "CALL INS_IMAGEN(?, ?)";
+      const sqlInsVehiclesImages = "CALL INS_VEHICULOS_IMAGENES(?, ?)";
 
-      const resultsVehicle = await query(sqlVehicle, [
+      const vehicle = await query(sqlVehicle, [
         PV_NOM_VEHICULO,
         PV_DES_VEHICULO,
         PI_COD_SUCURSAL,
@@ -136,10 +134,18 @@ class VehicleController extends ControllerBaseModel {
         PB_VAL_FRENOS,
         PB_VAL_VENDIDO,
       ]);
+      const image = await query(sqlCreateImageForVehicle, [
+        PV_URL_IMAGE,
+        PE_TIPO_IMAGEN,
+      ]);
+      await query(sqlInsVehiclesImages, [
+        vehicle[0].COD_VEHICULO,
+        image[0].COD_IMAGEN,
+      ]);
+      vehicle[0].imagen = image[0];
+
       res.status(201).json({
-        code: res.statusCode,
-        message: "Vehiculo creado exitosamente",
-        resultsVehicle,
+        vehicle,
       });
     } catch (error) {
       res.status(500).json({
@@ -170,6 +176,9 @@ class VehicleController extends ControllerBaseModel {
         PI_COD_VEHICULO,
         PV_NOM_VEHICULO,
         PV_DES_VEHICULO,
+        PI_COD_IMAGEN,
+        PV_URL_IMAGE,
+        PE_TIPO_IMAGEN,
         PI_COD_SUCURSAL,
         PI_COD_MARCA,
         PI_COD_MODELO,
@@ -194,7 +203,9 @@ class VehicleController extends ControllerBaseModel {
       //23
       const sql =
         "CALL UPD_VEHICULO(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-      const results = await query(sql, [
+      const sqlUpdateImagen = "CALL UPD_IMAGEN(?, ?, ?)";
+      const sqlupdVehicleImage = "CALL UPD_VEHICULOS_IMAGENES(?, ?)";
+      const vehicle = await query(sql, [
         PI_COD_VEHICULO,
         PV_NOM_VEHICULO,
         PV_DES_VEHICULO,
@@ -219,7 +230,14 @@ class VehicleController extends ControllerBaseModel {
         PB_VAL_FRENOS,
         PB_VAL_VENDIDO,
       ]);
-      res.status(200).json(results);
+      const updImagen = await query(sqlUpdateImagen, [
+        PI_COD_IMAGEN,
+        PV_URL_IMAGE,
+        PE_TIPO_IMAGEN,
+      ]);
+      await query(sqlupdVehicleImage, [PI_COD_VEHICULO, PI_COD_IMAGEN]);
+      vehicle[0].imagen = updImagen[0];
+      res.status(200).json(vehicle);
     } catch (error) {
       res.status(500).json({
         code: res.statusCode,

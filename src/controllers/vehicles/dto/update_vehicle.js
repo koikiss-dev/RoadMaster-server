@@ -4,6 +4,12 @@ export const updateVehicleShema = Joi.object().keys({
   PI_COD_VEHICULO: Joi.number().required().required(),
   PV_NOM_VEHICULO: Joi.string().default(null),
   PV_DES_VEHICULO: Joi.string().default(null),
+  PI_COD_IMAGEN: Joi.number().default(null),
+  PV_URL_IMAGE: Joi.string().default(null),
+  PE_TIPO_IMAGEN: Joi.string()
+    .valid("BANNER", "CONTENIDO")
+    .uppercase()
+    .default("BANNER"),
   PI_COD_SUCURSAL: Joi.number().default(null),
   PI_COD_MARCA: Joi.number().default(null),
   PI_COD_MODELO: Joi.number().default(null),

@@ -11,6 +11,7 @@ import { BrandRouter } from "./controllers/brands/routes/brandRoutes.js";
 import { criticRoutes } from "./controllers/critics/routes/criticRoutes.js";
 import { ModelRoutes } from "./controllers/models/routes/ModelRoutes.js";
 import { usersRoutes } from "./controllers/users/routes/userRoutes.js";
+import { PersonRoutes } from "./controllers/person/routes/PersonRoutes.js";
 
 //express config
 const app = express();
@@ -30,6 +31,7 @@ app.use(BrandRouter);
 app.use(criticRoutes);
 app.use(ModelRoutes);
 app.use(usersRoutes);
+app.use(PersonRoutes);
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
