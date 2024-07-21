@@ -25,7 +25,7 @@ app.use(helmet());
 app.use(cors());
 
 //use routes
-app.use(ImageRoutes);
+
 app.use(VehiclesRoutes);
 app.use(BrandRouter);
 app.use(criticRoutes);

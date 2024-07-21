@@ -16,9 +16,8 @@ class VehicleController extends ControllerBaseModel {
    * @memberof VehicleController
    * @param {import("express").Request} req
    * @param {import("express").Response} res
-   * @returns {Promise<Array>}
    */
-  static async getRegisters(req, res) {
+  static async getVehicles(req, res) {
     try {
       const limit = req.query.limit || undefined;
       const sql = limit ? "CALL SEL_RANGO_VEHICULOS(?)" : "CALL SEL_VEHICULOS";
@@ -38,12 +37,11 @@ class VehicleController extends ControllerBaseModel {
   }
 
   /**
-   * Get one vehicle by id
+   * Get one vehicle
    * @static
    * @memberof VehicleController
    * @param {import("express").Request} req
    * @param {import("express").Response} res
-   * @returns {Promise<Array>}
    */
   static async getRegister(req, res) {
     try {
@@ -67,14 +65,16 @@ class VehicleController extends ControllerBaseModel {
    * @memberof VehicleController
    * @param {import("express").Request} req
    * @param {import("express").Response} res
-   * @returns {Promise<Array>}
    */
-  static async createRegister(req, res) {
+  static async createVehicle(req, res) {
     const body = req.body;
     try {
       const { error, value } = createVehicleShema.validate(body);
       if (error) {
-        return JoiError(error, res);
+        return res.status(400).json({
+          code: res.statusCode,
+          message: error.message,
+        });
       }
 
       // extract values from the validated object
@@ -105,7 +105,7 @@ class VehicleController extends ControllerBaseModel {
         PB_VAL_VENDIDO,
       } = value;
 
-      const sqlVehicle =
+      const sql =
         "CALL INS_VEHICULO(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       const sqlCreateImageForVehicle = "CALL INS_IMAGEN(?, ?)";
       const sqlInsVehiclesImages = "CALL INS_VEHICULOS_IMAGENES(?, ?)";
@@ -161,7 +161,6 @@ class VehicleController extends ControllerBaseModel {
    * @memberof VehicleController
    * @param {import("express").Request} req
    * @param {import("express").Response} res
-   * @returns {Promise<Array>}
    */
   static async updateRegister(req, res) {
     const body = req.body;
