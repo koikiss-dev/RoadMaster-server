@@ -3,6 +3,11 @@ import Joi from "joi";
 export const createVehicleShema = Joi.object().keys({
   PV_NOM_VEHICULO: Joi.string().required(),
   PV_DES_VEHICULO: Joi.string().required(),
+  PV_URL_IMAGE: Joi.string().default(null),
+  PE_TIPO_IMAGEN: Joi.string()
+    .valid("BANNER", "CONTENIDO")
+    .uppercase()
+    .default("BANNER"),
   PI_COD_SUCURSAL: Joi.number().required(),
   PI_COD_MARCA: Joi.number().required(),
   PI_COD_MODELO: Joi.number().required(),
@@ -21,6 +26,14 @@ export const createVehicleShema = Joi.object().keys({
   PI_NUM_CAPACIDAD_CARGA_KG: Joi.number().required(),
   PI_NUM_ASIENTOS: Joi.number().required(),
   PI_NUM_AIRBAGS: Joi.number().required(),
-  PB_VAL_FRENOS: Joi.string().length(2).uppercase().required(),
-  PB_VAL_VENDIDO: Joi.string().length(2).uppercase().required(),
+  PB_VAL_FRENOS: Joi.string()
+    .valid("SI", "NO")
+    .length(2)
+    .uppercase()
+    .required(),
+  PB_VAL_VENDIDO: Joi.string()
+    .valid("SI", "NO")
+    .length(2)
+    .uppercase()
+    .required(),
 });
