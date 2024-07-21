@@ -14,7 +14,7 @@ class ControllerBaseModel {
   }
 
   /**
-   * Get all register with limit option
+   * Get all register with an limit option
    * @static
    * @param {import("express").Request} req
    * @param {import("express").Response} res
