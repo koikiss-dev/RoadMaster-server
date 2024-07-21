@@ -1,45 +1,31 @@
-import { createUserShema } from "./dto/create_critic.js";
-import {query} from "../../utils/query.js";
-import { updateUserShema } from "./dto/update_critic.js";
+import { createUserShema } from "./dto/create_user.js";
+import { query } from "../../utils/query.js";
+import { updateUserShema } from "./dto/update_user.js";
 import { JoiError } from "../../utils/JoiError.js";
 import ControllerBaseMode1 from "../ControllerAbstract.js";
 
-
-
 class userController extends ControllerBaseMode1 {
+  static async getRegisters(req, res) {
+    try {
+      const limit = req.query.limit || undefined;
+      const sql = limit ? "CALL SEL_RANGO_USUARIOS(?)" : "CALL SEL_USUARIOS";
+      const results = await query(sql, limit);
 
-
-
-
-static async getRegisters (req, res){
-    try{
-        const limit = req.query.limit || undefined;
-        const sql = limit ? "CALL SEL_RANGO_USUARIOS(?)" : "CALL SEL_USUARIOS";
-        const results = await query (sql, limit);
-
-
-        res.status(200).json({
-            results,
-        });
-
-    }catch (error) {
-        res.status(500).json ({
-            code: res.statusCode,
-            message: "Error al Obtener los Usuarios",
-        });
+      res.status(200).json(results);
+    } catch (error) {
+      res.status(500).json({
+        code: res.statusCode,
+        message: "Error al Obtener los Usuarios",
+      });
     }
-}
+  }
 
-
-static async getRegister(req, res) {
+  static async getRegister(req, res) {
     try {
       const id = req.query.id;
       const results = await query("CALL SEL_USUARIO(?)", [id]);
 
-      return res.json({
-        results,
-
-      });
+      return res.json(results);
     } catch (error) {
       return res.status(500).json({
         code: res.statusCode,
@@ -47,7 +33,6 @@ static async getRegister(req, res) {
       });
     }
   }
-
 
   static async createRegister(req, res) {
     const body = req.body;
@@ -64,25 +49,20 @@ static async getRegister(req, res) {
         PV_PWR_USUARIO,
         PV_DIR_MAC,
         PV_DIR_IP,
-
+        PI_COD_PERSONA,
       } = value;
 
-      const sqlModel =
-        "CALL INS_USUARIO(?, ?, ?, ?, ? )";
+      const sqlUser = "CALL INS_USUARIO(?, ?, ?, ?, ?, ? )";
 
-      const resultsUser= await query(sqlUser, [
-
+      const resultsUser = await query(sqlUser, [
         PV_NOM_USUARIO,
         PV_EMAIL_USUARIO,
         PV_PWR_USUARIO,
         PV_DIR_MAC,
         PV_DIR_IP,
+        PI_COD_PERSONA,
       ]);
-      res.status(201).json({
-        code: res.statusCode,
-        message: "Usuario creado exitosamente",
-        resultsUser,
-      });
+      res.status(201).json(resultsUser);
     } catch (error) {
       res.status(500).json({
         code: res.statusCode,
@@ -90,7 +70,6 @@ static async getRegister(req, res) {
       });
     }
   }
-
 
   static async updateRegister(req, res) {
     const body = req.body;
@@ -108,11 +87,10 @@ static async getRegister(req, res) {
         PV_PWR_USUARIO,
         PV_DIR_MAC,
         PV_DIR_IP,
-        PI_COD_PERSONA
+        PI_COD_PERSONA,
       } = value;
-      
-      const sql =
-        "CALL UPD_USER(?, ?, ?, ?, ? , ? , ?)";
+
+      const sql = "CALL UPD_USUARIO(?, ?, ?, ?, ? , ? , ?)";
       const results = await query(sql, [
         PI_COD_USUARIO,
         PV_NOM_USUARIO,
@@ -120,7 +98,7 @@ static async getRegister(req, res) {
         PV_PWR_USUARIO,
         PV_DIR_MAC,
         PV_DIR_IP,
-        PI_COD_PERSONA
+        PI_COD_PERSONA,
       ]);
       res.status(200).json(results);
     } catch (error) {
@@ -130,7 +108,6 @@ static async getRegister(req, res) {
       });
     }
   }
-
 }
 
 export default userController;

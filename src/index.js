@@ -7,6 +7,10 @@ import helmet from "helmet";
 //import routes
 import { VehiclesRoutes } from "./controllers/vehicles/routes/VehiclesRoutes.js";
 import { ImageRoutes } from "./controllers/images/routes/ImagesRoutes.js";
+import { BrandRouter } from "./controllers/brands/routes/brandRoutes.js";
+import { criticRoutes } from "./controllers/critics/routes/criticRoutes.js";
+import { ModelRoutes } from "./controllers/models/routes/ModelRoutes.js";
+import { usersRoutes } from "./controllers/users/routes/userRoutes.js";
 
 //express config
 const app = express();
@@ -22,6 +26,10 @@ app.use(cors());
 //use routes
 app.use(ImageRoutes);
 app.use(VehiclesRoutes);
+app.use(BrandRouter);
+app.use(criticRoutes);
+app.use(ModelRoutes);
+app.use(usersRoutes);
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

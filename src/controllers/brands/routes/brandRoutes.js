@@ -4,8 +4,8 @@ import { Router } from "express";
 const router = Router();
 
 router.get("/brands", brandController.getRegisters);
-router.get("/brands", brandController.getRegister);
+router.get("/brand", brandController.getRegister);
 router.post("/brands", brandController.createRegister);
-router.patch("/brands", brandController.updateRegister);
+router.patch("/brand", brandController.updateRegister);
 
-export { router as brandRoutes };
+export { router as BrandRouter };
