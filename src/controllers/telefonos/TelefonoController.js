@@ -1,97 +1,81 @@
-import { createEmployeeShema } from "./dto/create_employees.js";
+import { createTelefonoShema } from "./dto/create_telefonos.js";
 import { query } from "../../utils/query.js";
-import { updateEmployeeShema } from "./dto/update_employees.js";
+import { updateTelefonoShema } from "./dto/update_telefonos.js";
 import { JoiError } from "../../utils/JoiError.js";
 import ControllerBaseModel from "../ControllerAbstract.js";
 
 /**
- * @class EmployeeController
+ * @class TelefonoController
  * @extends ControllerBaseModel
  */
-
-class EmployeeController extends ControllerBaseModel {
+class TelefonoController extends ControllerBaseModel {
   /**
-   * Get all employees
+   * Get all telefonos
    * @static
-   * @memberof EmployeeController
+   * @memberof TelefonoController
    * @param {import("express").Request} req
    * @param {import("express").Response} res
    * @returns {Promise<Array>}
    */
-
   static async getRegisters(req, res) {
     try {
       const limit = req.query.limit || undefined;
-      const sql = limit ? "CALL SEL_RANGO_EMPLEADOS(?)" : "CALL SEL_EMPLEADOS";
-      const results = await query(sql, limit);
+      const sql = limit ? "CALL SEL_RANGO_TELEFONOS(?)" : "CALL SEL_TELEFONOS";
+      const results = await query(sql, limit ? [limit] : []);
+      results.map(({ COD_TELEFONO }) => COD_TELEFONO);
 
-      res.status(200).json({
-        results,
-      });
+      res.status(200).json(results);
     } catch (error) {
       res.status(500).json({
         code: res.statusCode,
-        message: "Error al obtener los vehiculos",
+        message: "Error al obtener los números de teléfonos",
       });
     }
   }
 
   /**
-   * Get one employee by id
+   * Get one telefono by id
    * @static
-   * @memberof EmployeeController
+   * @memberof TelefonoController
    * @param {import("express").Request} req
    * @param {import("express").Response} res
    * @returns {Promise<Array>}
    */
-
   static async getRegister(req, res) {
     try {
       const id = req.query.id;
-      const results = await query("CALL SEL_EMPLEADO(?)", [id]);
-
-      return res.json({
-        results,
-      });
+      const results = await query("CALL SEL_TELEFONO(?)", [id]);
+      return res.json(results);
     } catch (error) {
       return res.status(500).json({
         code: res.statusCode,
-        message: "Error al obtener el vehiculo",
+        message: "Error al obtener el teléfono",
       });
     }
   }
 
   /**
-   * Create a new employee
+   * Create a new telefono
    * @static
-   * @memberof EmployeeController
+   * @memberof TelefonoController
    * @param {import("express").Request} req
    * @param {import("express").Response} res
    * @returns {Promise<Array>}
    */
-
   static async createRegister(req, res) {
     const body = req.body;
     try {
-      const { error, value } = createEmployeeShema.validate(body);
+      const { error, value } = createTelefonoShema.validate(body);
       if (error) {
         return JoiError(error, res);
       }
 
-      // extract values from the validated object
-      const { PB_VAL_ROL, PI_COD_PERSONA } = value;
+      const { PI_NUM_TELEFONO } = value;
 
-      const sqlEmployee = "CALL INS_EMPLEADO(?, ?)";
+      const sql = "CALL INS_TELEFONO(?)";
+      const results = await query(sql, [PI_NUM_TELEFONO]);
 
-      const resultsEmployee = await query(sqlEmployee, [
-        PB_VAL_ROL,
-        PI_COD_PERSONA,
-      ]);
-      res.status(201).json({
-        code: res.statusCode,
-        message: "Empleado creado exitosamente",
-        resultsEmployee,
-      });
+      res.status(201).json(results);
     } catch (error) {
       res.status(500).json({
         code: res.statusCode,
@@ -101,9 +85,9 @@ class EmployeeController extends ControllerBaseModel {
   }
 
   /**
-   * Update a employee
+   * Update a telefono
    * @static
-   * @memberof EmployeeController
+   * @memberof TelefonoController
    * @param {import("express").Request} req
    * @param {import("express").Response} res
    * @returns {Promise<Array>}
@@ -111,20 +95,15 @@ class EmployeeController extends ControllerBaseModel {
   static async updateRegister(req, res) {
     const body = req.body;
     try {
-      const { error, value } = updateEmployeeShema.validate(body);
+      const { error, value } = updateTelefonoShema.validate(body);
       if (error) {
         return JoiError(error, res);
       }
 
-      // extract values from the validated object
-      const { PI_COD_EMPLEADO, PB_VAL_ROL, PI_COD_PERSONA } = value;
+      const { PI_COD_TELEFONO, PI_NUM_TELEFONO } = value;
+      const sql = "CALL UPD_TELEFONO(?, ?)";
+      const results = await query(sql, [PI_COD_TELEFONO, PI_NUM_TELEFONO]);
 
-      const sql = "CALL UPD_EMPLEADO(?, ?, ?)";
-      const results = await query(sql, [
-        PI_COD_EMPLEADO,
-        PB_VAL_ROL,
-        PI_COD_PERSONA,
-      ]);
       res.status(200).json(results);
     } catch (error) {
       res.status(500).json({
@@ -135,4 +114,4 @@ class EmployeeController extends ControllerBaseModel {
   }
 }
 
-export default EmployeeController;
+export default TelefonoController;
