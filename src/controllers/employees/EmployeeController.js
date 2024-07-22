@@ -1,4 +1,3 @@
-
 import { createEmployeeShema } from "./dto/create_employees.js";
 import { query } from "../../utils/query.js";
 import { updateEmployeeShema } from "./dto/update_employees.js";
@@ -11,8 +10,7 @@ import ControllerBaseModel from "../ControllerAbstract.js";
  */
 
 class EmployeeController extends ControllerBaseModel {
-
-    /**
+  /**
    * Get all employees
    * @static
    * @memberof EmployeeController
@@ -20,25 +18,25 @@ class EmployeeController extends ControllerBaseModel {
    * @param {import("express").Response} res
    * @returns {Promise<Array>}
    */
-    
-static async getRegisters(req, res) {
+
+  static async getRegisters(req, res) {
     try {
-        const limit = req.query.limit || undefined;
-        const sql = limit ? "CALL SEL_RANGO_EMPLEADOS(?)" : "CALL SEL_EMPLEADOS";
-        const results = await query(sql, limit);
-        
-        res.status(200).json({
+      const limit = req.query.limit || undefined;
+      const sql = limit ? "CALL SEL_RANGO_EMPLEADOS(?)" : "CALL SEL_EMPLEADOS";
+      const results = await query(sql, limit);
+
+      res.status(200).json({
         results,
-        });
+      });
     } catch (error) {
-        res.status(500).json({
+      res.status(500).json({
         code: res.statusCode,
         message: "Error al obtener los vehiculos",
-        });
+      });
     }
-    }
+  }
 
-/**
+  /**
    * Get one employee by id
    * @static
    * @memberof EmployeeController
@@ -47,14 +45,13 @@ static async getRegisters(req, res) {
    * @returns {Promise<Array>}
    */
 
-static async getRegister(req, res) {
+  static async getRegister(req, res) {
     try {
       const id = req.query.id;
       const results = await query("CALL SEL_EMPLEADO(?)", [id]);
 
       return res.json({
         results,
-
       });
     } catch (error) {
       return res.status(500).json({
@@ -64,16 +61,16 @@ static async getRegister(req, res) {
     }
   }
 
-/**
+  /**
    * Create a new employee
    * @static
    * @memberof EmployeeController
    * @param {import("express").Request} req
    * @param {import("express").Response} res
    * @returns {Promise<Array>}
-*/
+   */
 
-static async createRegister(req, res) {
+  static async createRegister(req, res) {
     const body = req.body;
     try {
       const { error, value } = createEmployeeShema.validate(body);
@@ -82,18 +79,11 @@ static async createRegister(req, res) {
       }
 
       // extract values from the validated object
-      const {
-       
-        PB_VAL_ROL,
-        PI_COD_PERSONA,
+      const { PB_VAL_ROL, PI_COD_PERSONA } = value;
 
-      } = value;
-
-      const sqlEmployee =
-        "CALL INS_EMPLEADO(?, ?)";
+      const sqlEmployee = "CALL INS_EMPLEADO(?, ?)";
 
       const resultsEmployee = await query(sqlEmployee, [
- 
         PB_VAL_ROL,
         PI_COD_PERSONA,
       ]);
@@ -110,7 +100,7 @@ static async createRegister(req, res) {
     }
   }
 
-/**
+  /**
    * Update a employee
    * @static
    * @memberof EmployeeController
@@ -118,7 +108,7 @@ static async createRegister(req, res) {
    * @param {import("express").Response} res
    * @returns {Promise<Array>}
    */
-static async updateRegister(req, res) {
+  static async updateRegister(req, res) {
     const body = req.body;
     try {
       const { error, value } = updateEmployeeShema.validate(body);
@@ -127,14 +117,9 @@ static async updateRegister(req, res) {
       }
 
       // extract values from the validated object
-      const {
-        PI_COD_EMPLEADO,
-        PB_VAL_ROL,
-        PI_COD_PERSONA,
-      } = value;
-      
-      const sql =
-        "CALL UPD_EMPLOYEE(?, ?, ?)";
+      const { PI_COD_EMPLEADO, PB_VAL_ROL, PI_COD_PERSONA } = value;
+
+      const sql = "CALL UPD_EMPLEADO(?, ?, ?)";
       const results = await query(sql, [
         PI_COD_EMPLEADO,
         PB_VAL_ROL,
@@ -148,13 +133,6 @@ static async updateRegister(req, res) {
       });
     }
   }
-
 }
 
 export default EmployeeController;
-
-
-
-
-
-
