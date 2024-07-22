@@ -1,6 +1,6 @@
 import { createTelefonoShema } from "./dto/create_telefonos.js";
 import { query } from "../../utils/query.js";
-import { updateTelefonoShema } from "./dto/update_telefono.js";
+import { updateTelefonoShema } from "./dto/update_telefonos.js";
 import { JoiError } from "../../utils/JoiError.js";
 import ControllerBaseModel from "../ControllerAbstract.js";
 
@@ -20,13 +20,11 @@ class TelefonoController extends ControllerBaseModel {
   static async getRegisters(req, res) {
     try {
       const limit = req.query.limit || undefined;
-      const sql = limit ? "CALL SEL_TELEFONOS(?)" : "CALL SEL_TELEFONOS";
+      const sql = limit ? "CALL SEL_RANGO_TELEFONOS(?)" : "CALL SEL_TELEFONOS";
       const results = await query(sql, limit ? [limit] : []);
       results.map(({ COD_TELEFONO }) => COD_TELEFONO);
-  
-      res.status(200).json({
-        results,
-      });
+
+      res.status(200).json(results);
     } catch (error) {
       res.status(500).json({
         code: res.statusCode,
@@ -34,7 +32,6 @@ class TelefonoController extends ControllerBaseModel {
       });
     }
   }
-  
 
   /**
    * Get one telefono by id
@@ -46,11 +43,9 @@ class TelefonoController extends ControllerBaseModel {
    */
   static async getRegister(req, res) {
     try {
-      const id = req.params.id;
-      const results = await query("CALL SEL_TELEFONOS(?)", [id]);
-      return res.json({
-        results,
-      });
+      const id = req.query.id;
+      const results = await query("CALL SEL_TELEFONO(?)", [id]);
+      return res.json(results);
     } catch (error) {
       return res.status(500).json({
         code: res.statusCode,
@@ -80,11 +75,7 @@ class TelefonoController extends ControllerBaseModel {
       const sql = "CALL INS_TELEFONO(?)";
       const results = await query(sql, [PI_NUM_TELEFONO]);
 
-      res.status(201).json({
-        code: res.statusCode,
-        message: "Teléfono agregado exitosamente",
-        results,
-      });
+      res.status(201).json(results);
     } catch (error) {
       res.status(500).json({
         code: res.statusCode,
