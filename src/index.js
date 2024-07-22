@@ -13,6 +13,7 @@ import { usersRoutes } from "./controllers/users/routes/userRoutes.js";
 import { PersonRoutes } from "./controllers/person/routes/PersonRoutes.js";
 import { EmployeesRoutes } from "./controllers/employees/routes/EmployeesRoutes.js";
 import { SucursalRouter } from "./controllers/branch_offices/routers/SucursalRouters.js";
+import { TelefonoRouters } from "./controllers/telefonos/routers/TelefonoRouters.js";
 
 //express config
 const app = express();
@@ -35,6 +36,8 @@ app.use(usersRoutes);
 app.use(PersonRoutes);
 app.use(EmployeesRoutes);
 app.use(SucursalRouter);
+app.use(TelefonoRouters);
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

@@ -4,8 +4,8 @@ import { Router } from "express";
 const router = Router();
 
 router.get("/telefonos", TelefonoController.getRegisters);
-router.get("/telefonos/:id", TelefonoController.getRegister); 
+router.get("/telefono", TelefonoController.getRegister);
 router.post("/telefonos", TelefonoController.createRegister);
-router.patch("/telefonos", TelefonoController.updateRegister);
+router.patch("/telefono", TelefonoController.updateRegister);
 
 export { router as TelefonoRouters };
