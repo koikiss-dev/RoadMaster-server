@@ -1,5 +1,5 @@
 import { Router } from "express";
-import DireccionesController from "../controllers/DireccionesController.js";
+import DireccionesController from "../DireccionesController.js";
 
 const router = Router();
 
