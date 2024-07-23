@@ -8,7 +8,7 @@ class ControllerBaseModel {
   constructor() {
     if (this.constructor === ControllerBaseModel) {
       throw new TypeError(
-        "Abstract class ControllerBaseModel cannot be instantiated."
+        "Abstract class ControllerBaseModel cannot be instantiated.",
       );
     }
   }
