@@ -14,6 +14,8 @@ import { PersonRoutes } from "./controllers/person/routes/PersonRoutes.js";
 import { EmployeesRoutes } from "./controllers/employees/routes/EmployeesRoutes.js";
 import { SucursalRouter } from "./controllers/branch_offices/routers/SucursalRouters.js";
 import { TelefonoRouters } from "./controllers/telefonos/routers/TelefonoRouters.js";
+import { VentasRoutes } from "./controllers/Ventas/routes/VentasRoutes.js";
+import { DireccionesRoutes } from "./controllers/Direcciones/routes/DireccionesRoutes.js";
 
 //express config
 const app = express();
@@ -37,6 +39,8 @@ app.use(PersonRoutes);
 app.use(EmployeesRoutes);
 app.use(SucursalRouter);
 app.use(TelefonoRouters);
+app.use(VentasRoutes);
+app.use(DireccionesRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
