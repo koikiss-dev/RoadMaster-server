@@ -6,7 +6,7 @@ import { CheckEmptyRows } from "./ChekEmptyRows.js";
  *
  * @param {string} sql - The SQL query to be executed.
  * @param {Array} [values] values - The values to be used in the query.
- * @return {Promise<Array>} A promise that resolves to an array of rows from the query result.
+ * @return {Promise<import("mysql2").QueryResult, import("mysql2").FieldPacket[]>} A promise that resolves to an array of rows from the query result.
  * If the result is empty, an empty array is returned.
  */
 export async function query(sql, values) {
