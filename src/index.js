@@ -16,6 +16,7 @@ import { SucursalRouter } from "./controllers/branch_offices/routers/SucursalRou
 import { TelefonoRouters } from "./controllers/telefonos/routers/TelefonoRouters.js";
 import { VentasRoutes } from "./controllers/Ventas/routes/VentasRoutes.js";
 import { DireccionesRoutes } from "./controllers/Direcciones/routes/DireccionesRoutes.js";
+import { LocationRoutes } from "./controllers/locations/routes/LocationsRoutes.js";
 
 //express config
 const app = express();
@@ -41,6 +42,7 @@ app.use(SucursalRouter);
 app.use(TelefonoRouters);
 app.use(VentasRoutes);
 app.use(DireccionesRoutes);
+app.use(LocationRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
