@@ -3,9 +3,9 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/models", ModelsController.getRegisters);
-router.get("/model", ModelsController.getRegister);
-router.post("/models", ModelsController.createRegister);
-router.patch("/model", ModelsController.updateRegister);
+router.get("/modelos", ModelsController.getRegisters);
+router.get("/modelo", ModelsController.getRegister);
+router.post("/modelos", ModelsController.createRegister);
+router.patch("/modelo", ModelsController.updateRegister);
 
 export { router as ModelRoutes };

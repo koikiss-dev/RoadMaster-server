@@ -100,9 +100,7 @@ class PersonController extends ControllerBaseModel {
         PI_COD_EMAIL,
         PI_COD_DIRECCION,
       ]);
-      res.status(201).json({
-        results,
-      });
+      res.status(201).json(results);
     } catch (error) {
       res.status(500).json({
         code: res.statusCode,

@@ -3,9 +3,9 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/locations", LocationsController.getRegisters);
-router.get("/location", LocationsController.getRegister);
-router.post("/locations", LocationsController.createRegister);
-router.patch("/location", LocationsController.updateRegister);
+router.get("/ubicaciones", LocationsController.getRegisters);
+router.get("/ubicacion", LocationsController.getRegister);
+router.post("/ubicaciones", LocationsController.createRegister);
+router.patch("/ubicacion", LocationsController.updateRegister);
 
 export { router as LocationRoutes };
