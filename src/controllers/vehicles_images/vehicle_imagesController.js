@@ -8,7 +8,9 @@ class VehicleimageController extends ControllerBaseMode1 {
   static async getRegisters(req, res) {
     try {
       const limit = req.query.limit || undefined;
-      const sql = limit ? "CALL SEL_RANGO_VEHICULOS_IMAGENES(?)" : "CALL SEL_VEHICULOS_IMAGENES";
+      const sql = limit
+        ? "CALL SEL_RANGO_VEHICULOS_IMAGENES(?)"
+        : "CALL SEL_VEHICULOS_IMAGENES";
       const results = await query(sql, limit);
 
       res.status(200).json(results);
@@ -23,7 +25,7 @@ class VehicleimageController extends ControllerBaseMode1 {
   static async getRegister(req, res) {
     try {
       const id = req.query.id;
-      const results = await query("SEL_VEHICULOS_IMAGENES(?)", [id]);
+      const results = await query("CALL SEL_VEHICULO_IMAGEN(?)", [id]);
 
       return res.json(results);
     } catch (error) {
@@ -43,10 +45,7 @@ class VehicleimageController extends ControllerBaseMode1 {
       }
 
       // extract values from the validated object
-      const {
-      PI_COD_VEHICULO,
-      PI_COD_IMAGEN,
-      } = value;
+      const { PI_COD_VEHICULO, PI_COD_IMAGEN } = value;
 
       const sqlUser = "CALL INS_VEHICULOS_IMAGENES(?, ?)";
 
@@ -72,16 +71,10 @@ class VehicleimageController extends ControllerBaseMode1 {
       }
 
       // extract values from the validated object
-      const {
-        PI_COD_VEHICULO,
-      PI_COD_IMAGEN,
-      } = value;
+      const { PI_COD_VEHICULO, PI_COD_IMAGEN } = value;
 
-      const sql = "CALL UPD_COD_VEHICULO(?, ?)";
-      const results = await query(sql, [
-        PI_COD_VEHICULO,
-      PI_COD_IMAGEN,
-      ]);
+      const sql = "CALL UPD_VEHICULOS_IMAGENES(?, ?)";
+      const results = await query(sql, [PI_COD_VEHICULO, PI_COD_IMAGEN]);
       res.status(200).json(results);
     } catch (error) {
       res.status(500).json({

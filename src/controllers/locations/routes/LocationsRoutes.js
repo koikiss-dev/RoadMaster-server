@@ -1,11 +1,11 @@
-import locationsController from "/LocationsController";
+import LocationsController from "../LocationsController.js";
 import { Router } from "express";
 
 const router = Router();
 
-router.get("/locations", locationsController.getRegisters);
-router.get("/location", locations.getRegister);
-router.post("/locations", locationsController.createRegister);
-router.patch("/location", locationsController.updateRegister);
+router.get("/ubicaciones", LocationsController.getRegisters);
+router.get("/ubicacion", LocationsController.getRegister);
+router.post("/ubicaciones", LocationsController.createRegister);
+router.patch("/ubicacion", LocationsController.updateRegister);
 
-export { router as locationsController};
+export { router as LocationRoutes };

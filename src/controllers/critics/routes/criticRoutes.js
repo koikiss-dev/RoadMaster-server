@@ -3,9 +3,9 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/critics", criticController.getRegisters);
-router.get("/critic", criticController.getRegister);
-router.post("/critics", criticController.createRegister);
-router.patch("/critic", criticController.updateRegister);
+router.get("/criticas", criticController.getRegisters);
+router.get("/critica", criticController.getRegister);
+router.post("/criticas", criticController.createRegister);
+router.patch("/critica", criticController.updateRegister);
 
 export { router as criticRoutes };

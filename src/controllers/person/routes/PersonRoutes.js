@@ -3,9 +3,9 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/persons", PersonController.getRegisters);
-router.get("/person", PersonController.getRegister);
-router.post("/person", PersonController.createRegister);
-router.patch("/person", PersonController.updateRegister);
+router.get("/personas", PersonController.getRegisters);
+router.get("/persona", PersonController.getRegister);
+router.post("/personas", PersonController.createRegister);
+router.patch("/persona", PersonController.updateRegister);
 
 export { router as PersonRoutes };

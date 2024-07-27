@@ -3,9 +3,9 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/vehicles", VehicleController.getRegisters);
-router.get("/vehicle", VehicleController.getRegister);
-router.post("/vehicles", VehicleController.createRegister);
-router.patch("/vehicle", VehicleController.updateRegister);
+router.get("/vehiculos", VehicleController.getRegisters);
+router.get("/vehiculo", VehicleController.getRegister);
+router.post("/vehiculos", VehicleController.createRegister);
+router.patch("/vehiculo", VehicleController.updateRegister);
 
 export { router as VehiclesRoutes };

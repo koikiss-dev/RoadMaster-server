@@ -6,7 +6,11 @@
  */
 export function CheckEmptyRows(rows) {
   if (!rows) {
-    return [];
+    return [
+      {
+        mensaje: "No se econtro informacion",
+      },
+    ];
   }
   return rows;
 }
