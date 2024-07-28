@@ -25,13 +25,11 @@ class EmployeeController extends ControllerBaseModel {
       const sql = limit ? "CALL SEL_RANGO_EMPLEADOS(?)" : "CALL SEL_EMPLEADOS";
       const results = await query(sql, limit);
 
-      res.status(200).json({
-        results,
-      });
+      res.status(200).json(results);
     } catch (error) {
       res.status(500).json({
         code: res.statusCode,
-        message: "Error al obtener los vehiculos",
+        message: "Error al obtener los empleados",
       });
     }
   }
@@ -50,13 +48,11 @@ class EmployeeController extends ControllerBaseModel {
       const id = req.query.id;
       const results = await query("CALL SEL_EMPLEADO(?)", [id]);
 
-      return res.json({
-        results,
-      });
+      return res.json(results);
     } catch (error) {
       return res.status(500).json({
         code: res.statusCode,
-        message: "Error al obtener el vehiculo",
+        message: "Error al obtener el empleados",
       });
     }
   }
@@ -87,11 +83,7 @@ class EmployeeController extends ControllerBaseModel {
         PB_VAL_ROL,
         PI_COD_PERSONA,
       ]);
-      res.status(201).json({
-        code: res.statusCode,
-        message: "Empleado creado exitosamente",
-        resultsEmployee,
-      });
+      res.status(201).json(resultsEmployee);
     } catch (error) {
       res.status(500).json({
         code: res.statusCode,
