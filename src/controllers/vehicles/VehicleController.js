@@ -25,9 +25,7 @@ class VehicleController extends ControllerBaseModel {
       const results = await query(sql, limit);
       //const iterIds = results.map(({ COD_VEHICULO }) => COD_VEHICULO);
 
-      res.status(200).json({
-        results,
-      });
+      res.status(200).json(results);
     } catch (error) {
       console.log(error);
       res.status(500).json({
@@ -50,9 +48,7 @@ class VehicleController extends ControllerBaseModel {
       const id = req.query.id;
       const results = await query("CALL SEL_VEHICULO(?)", [id]);
 
-      return res.json({
-        results,
-      });
+      return res.json(results);
     } catch (error) {
       return res.status(500).json({
         code: res.statusCode,
@@ -144,9 +140,7 @@ class VehicleController extends ControllerBaseModel {
       ]);
       vehicle[0].imagen = image[0];
 
-      res.status(201).json({
-        vehicle,
-      });
+      res.status(201).json(vehicle);
     } catch (error) {
       res.status(500).json({
         code: res.statusCode,
