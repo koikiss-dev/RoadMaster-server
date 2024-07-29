@@ -33,3 +33,12 @@ npm i
 ```bash
 npm run dev
 ```
+
+## Contribuidores
+
+- [JorgeDuron](https://github.com/koikiss-dev)
+- [Sergio](https://github.com/SergioRivera55)
+- [Zelaya](https://github.com/ARZELAYA)
+- [Zeuss](https://github.com/ZeussCalix)
+- [Mauricio](https://github.com/AMSL09)
+- [Jordi](https://github.com/JordiPadilla22)
