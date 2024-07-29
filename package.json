@@ -8,10 +8,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "npx prettier . --write"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "API",
+    "CRUD",
+    "UNAH"
+  ],
+  "author": "Grupo1 Lenguaje",
   "license": "ISC",
-  "description": "",
+  "description": "API CRUD para sistema de vehiculos. UNAH",
   "dependencies": {
     "class-validator": "^0.14.1",
     "express": "^4.19.2",
