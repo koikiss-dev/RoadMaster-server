@@ -8,7 +8,7 @@ Repositorio de GitHub donde esta almacenado el código fuente de la api para el 
 - Tener instalado NodeJS ([NodeJs](https://nodejs.org/en/download/prebuilt-installer))
 - Tener un editor de código, de preferencia vscode ([VSCode](https://code.visualstudio.com/download))
 
-## Documentación de algunos paquetes UTI
+## Documentación de algunos paquetes que fueron de ayuda
 
 [joi.dev](https://joi.dev/api/?v=17.13.3)
 
@@ -33,3 +33,12 @@ npm i
 ```bash
 npm run dev
 ```
+
+## Contribuidores
+
+- [JorgeDuron](https://github.com/koikiss-dev)
+- [Sergio](https://github.com/SergioRivera55)
+- [Zelaya](https://github.com/ARZELAYA)
+- [Zeuss](https://github.com/ZeussCalix)
+- [Mauricio](https://github.com/AMSL09)
+- [Jordi](https://github.com/JordiPadilla22)
